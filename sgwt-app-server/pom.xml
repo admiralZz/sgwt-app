@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>sgwt-app</artifactId>
+    <groupId>com.example</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>sgwt-app-server</artifactId>
+  <packaging>war</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>dto</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.gwtproject</groupId>
+      <artifactId>gwt-servlet-jakarta</artifactId>
+      <version>${gwt-servlet-jakarta.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>${jakarta.servlet.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>sgwt-app-bridge</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.gwtproject</groupId>
+          <artifactId>gwt-user</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.4</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- 
+      Uncomment to include the SmartGWT "Admin Console" tool's server component, various data 
+      importers / exporters, and the server-side components of the BatchUploader.  
+      Refer to 'Tools Deployment' documentation topic.
+     -->
+    <!--
+    <dependency>
+        <groupId>com.isomorphic.smartgwt.lgpl</groupId>
+        <artifactId>isomorphic-tools</artifactId>
+        <version>${smartgwt.version}</version>
+    </dependency>
+    -->
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+          <groupId>com.isomorphic</groupId>
+          <artifactId>isc-maven-plugin</artifactId>
+          <configuration>
+
+            <!-- 
+              Here, we use a runtime extracted by gwt:codeserver.  You could just as easily use something like the following to 
+              use one extracted by the normal gwt compile process:
+
+              ${project.parent.basedir}/sgwt-app-client/target/sgwt-app-client-${project.version}/app/sc
+            -->
+            <smartclientRuntimeDir>${project.parent.build.directory}/gwt/launcherDir/app/sc</smartclientRuntimeDir>
+            <dataSourcesDir>WEB-INF/ds/classic-models</dataSourcesDir>
+          </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <!-- XXX: We want to exclude foo-client from 'env-dev' profile, Maven forces us to make a 'env-prod' profile -->
+      <id>prod</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>${project.groupId}</groupId>
+          <artifactId>sgwt-app-client</artifactId>
+          <version>${project.version}</version>
+          <type>war</type>
+          <scope>runtime</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>dev</id>
+      <activation>
+        <property>
+          <name>env</name>
+          <value>dev</value>
+        </property>
+      </activation>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.eclipse.jetty</groupId>
+              <artifactId>jetty-maven-plugin</artifactId>
+              <version>11.0.19</version>
+              <configuration>
+                <httpConnector>
+                  <!--host>localhost</host-->
+                  <port>8081</port>
+                </httpConnector>
+                <webApp>
+                  <resourceBases>
+                    <resourceBase>${project.basedir}/src/main/webapp</resourceBase>
+                    <resourceBase>${project.parent.build.directory}/gwt/launcherDir/</resourceBase>
+                  </resourceBases>
+                </webApp>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+  </profiles>
+
+</project>

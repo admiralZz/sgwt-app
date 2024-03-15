@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>sgwt-app</artifactId>
+        <groupId>com.example</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>sgwt-app-client</artifactId>
+    <packaging>gwt-app</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>dto</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>sgwt-app-bridge</artifactId>
+        </dependency>
+        <!-- Standard GWT depdendency -->
+        <dependency>
+            <groupId>org.gwtproject</groupId>
+            <artifactId>gwt-user</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.gwtproject</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <version>${gwt.version}</version>
+        </dependency>
+        <!-- The SmartGWT core -->
+        <dependency>
+            <groupId>com.isomorphic.smartgwt.lgpl</groupId>
+            <artifactId>smartgwt-lgpl</artifactId>
+            <version>${smartgwt.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>net.ltgt.gwt.maven</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <configuration>
+                    <moduleName>com.example.sgwt.app.SgwtApp</moduleName>
+                    <moduleShortName>app</moduleShortName>
+                    <style>DETAILED</style>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
