@@ -107,38 +107,6 @@
         </dependency>
       </dependencies>
     </profile>
-    <profile>
-      <id>dev</id>
-      <activation>
-        <property>
-          <name>env</name>
-          <value>dev</value>
-        </property>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.eclipse.jetty</groupId>
-              <artifactId>jetty-maven-plugin</artifactId>
-              <version>11.0.19</version>
-              <configuration>
-                <httpConnector>
-                  <!--host>localhost</host-->
-                  <port>8081</port>
-                </httpConnector>
-                <webApp>
-                  <resourceBases>
-                    <resourceBase>${project.basedir}/src/main/webapp</resourceBase>
-                    <resourceBase>${project.parent.build.directory}/gwt/launcherDir/</resourceBase>
-                  </resourceBases>
-                </webApp>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
   </profiles>
 
 </project>

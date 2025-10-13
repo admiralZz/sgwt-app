@@ -12,8 +12,8 @@
 
     <properties>
         <gwt.version>2.10.0</gwt.version>
-        <smartgwt.version>13.1-d20231220</smartgwt.version>
-        <gwt-servlet-jakarta.version>2.11.0-jakarta-20230928.131655-7</gwt-servlet-jakarta.version>
+        <smartgwt.version>13.1-p20251011</smartgwt.version>
+        <gwt-servlet-jakarta.version>2.12.2</gwt-servlet-jakarta.version>
         <jakarta.servlet.version>6.0.0</jakarta.servlet.version>
         <logback.version>1.5.1</logback.version>
 
@@ -105,6 +105,7 @@
         </pluginManagement>
     </build>
     <modules>
+        <module>runner</module>
         <module>dto</module>
         <module>sgwt-app-bridge</module>
         <module>sgwt-app-client</module>
